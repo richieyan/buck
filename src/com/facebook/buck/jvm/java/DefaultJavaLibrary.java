@@ -582,9 +582,9 @@ public class DefaultJavaLibrary extends AbstractBuildRule
   @Override
   public void addToCollector(AndroidPackageableCollector collector) {
     if (outputJar.isPresent()) {
-      collector.addClasspathEntry(
-          this,
-          new BuildTargetSourcePath(getBuildTarget(), outputJar.get()));
+      SourcePath sourcePath = new BuildTargetSourcePath(getBuildTarget(), outputJar.get());
+      collector.addClasspathEntry(this,sourcePath);
+      collector.addPathToThirdPartyJar(getBuildTarget(), sourcePath);
     }
     if (proguardConfig.isPresent()) {
       collector.addProguardConfig(getBuildTarget(), proguardConfig.get());
